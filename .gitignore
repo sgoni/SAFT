@@ -348,3 +348,4 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/src/Services/Customer/Customer.Infrastructure/Migrations/20210901225627_CRM-DB.cs
