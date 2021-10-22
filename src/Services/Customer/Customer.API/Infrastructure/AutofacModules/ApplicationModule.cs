@@ -22,7 +22,8 @@ namespace Customer.API.Infrastructure.AutofacModules
 
         protected override void Load(ContainerBuilder builder)
         {
-            // Customer
+            #region Customer
+
             builder.Register(c => new CustomerQueries(QueriesConnectionString))
                 .As<ICustomerQueries>()
                 .InstancePerLifetimeScope();
@@ -31,13 +32,18 @@ namespace Customer.API.Infrastructure.AutofacModules
                 .As<ICustomerRepository>()
                 .InstancePerLifetimeScope();
 
-            builder.RegisterAssemblyTypes(typeof(CreateCustomerCommandHandler).GetTypeInfo().Assembly)
+            builder.RegisterAssemblyTypes(typeof(CreateCustomerCommandHandler)
+                .GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
-            builder.RegisterAssemblyTypes(typeof(UpdateCustomerCommandHandler).GetTypeInfo().Assembly)
+            builder.RegisterAssemblyTypes(typeof(UpdateCustomerCommandHandler)
+                .GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
-            // Banking
+            #endregion
+
+            #region Banking
+
             builder.Register(c => new BankingQueries(QueriesConnectionString))
                 .As<IBankingQueries>()
                 .InstancePerLifetimeScope();
@@ -48,6 +54,8 @@ namespace Customer.API.Infrastructure.AutofacModules
 
             builder.RegisterAssemblyTypes(typeof(CreateBankCommandHandler).GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            #endregion
         }
     }
 }

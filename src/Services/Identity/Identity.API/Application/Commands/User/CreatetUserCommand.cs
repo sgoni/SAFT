@@ -1,11 +1,12 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Identity;
 using System.Runtime.Serialization;
 
-namespace Identity.API.Application.Commands.AspnetUser
+namespace Identity.API.Application.Commands.User
 {
     [DataContract]
-    public class CreateAspNetUserCommand
-        : IRequest<bool>
+    public class CreatetUserCommand
+        : IRequest<IdentityResult>
     {
         [DataMember]
         public string UserName { get; set; }
@@ -14,9 +15,9 @@ namespace Identity.API.Application.Commands.AspnetUser
         [DataMember]
         public string Password { get; set; }
 
-        public CreateAspNetUserCommand() { }
+        public CreatetUserCommand() { }
 
-        public CreateAspNetUserCommand(string userName, string email, string password) : this()
+        public CreatetUserCommand(string userName, string email, string password) : this()
         {
             UserName = userName;
             Email = email;

@@ -6,15 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Application\Commands\AspnetRole\CreateAspNetRoleCommandHandler.cs" />
-    <Compile Remove="Application\Commands\AspnetRole\DeleteAspNetRoleCommand.cs" />
-    <Compile Remove="Application\Commands\AspnetRole\DeleteAspNetRoleCommandHandler.cs" />
-    <Compile Remove="Application\Commands\AspnetRole\UpdateAspNetRoleCommand.cs" />
-    <Compile Remove="Application\Commands\AspnetRole\UpdateAspNetRoleCommandHandler.cs" />
-    <Compile Remove="Application\Commands\AspnetUser\DeleteAspNetUserCommand.cs" />
-    <Compile Remove="Application\Commands\AspnetUser\DeleteAspNetUserCommandHandler.cs" />
-    <Compile Remove="Application\Commands\AspnetUser\UpdateAspNetUserCommand.cs" />
-    <Compile Remove="Application\Commands\AspnetUser\UpdateAspNetUserCommandHandler.cs" />
+    <Compile Remove="Application\Commands\Role\CreateAspNetRoleCommandHandler.cs" />
+    <Compile Remove="Application\Commands\Role\DeleteAspNetRoleCommand.cs" />
+    <Compile Remove="Application\Commands\Role\DeleteAspNetRoleCommandHandler.cs" />
+    <Compile Remove="Application\Commands\Role\UpdateAspNetRoleCommand.cs" />
+    <Compile Remove="Application\Commands\Role\UpdateAspNetRoleCommandHandler.cs" />
+    <Compile Remove="Application\Commands\User\DeleteAspNetUserCommand.cs" />
+    <Compile Remove="Application\Commands\User\DeleteAspNetUserCommandHandler.cs" />
+    <Compile Remove="Application\Commands\User\UpdateAspNetUserCommand.cs" />
+    <Compile Remove="Application\Commands\User\UpdateAspNetUserCommandHandler.cs" />
     <Compile Remove="Application\Validations\CreateAspNetRoleCommandValidator.cs" />
     <Compile Remove="Application\Validations\UpdateAspNetRoleCommandValidator.cs" />
     <Compile Remove="Application\Validations\UpdateAspNetUserCommandValidator.cs" />
@@ -47,11 +47,11 @@
   <ItemGroup>
     <Folder Include="Application\Commands\Queries\" />
     <Folder Include="Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Logs\" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\Repos\Git\SAFT\src\SharedKernel\SharedKernel.csproj" />
+    <ProjectReference Include="..\..\..\SharedKernel\SharedKernel.csproj" />
     <ProjectReference Include="..\Identity.Infrastructure\Identity.Infrastructure.csproj" />
   </ItemGroup>
 
@@ -61,6 +61,14 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

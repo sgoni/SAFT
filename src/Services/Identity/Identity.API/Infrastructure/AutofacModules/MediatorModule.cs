@@ -1,8 +1,7 @@
 ﻿using Autofac;
 using FluentValidation;
 using Identity.API.Application.Behaviors;
-using Identity.API.Application.Commands.AspnetRole;
-using Identity.API.Application.Commands.AspnetUser;
+using Identity.API.Application.Commands.User;
 using Identity.API.Application.Validations;
 using MediatR;
 using System.Reflection;
@@ -18,27 +17,23 @@ namespace Identity.API.Infrastructure.AutofacModules
 
             // Register all the Command classes (they implement IRequestHandler) in assembly holding the Commands
 
-            #region AspNetUser Commands CRUD
+            #region User Commands CRUD
 
-            builder.RegisterAssemblyTypes(typeof(CreateAspNetUserCommand)
+            builder.RegisterAssemblyTypes(typeof(CreatetUserCommand)
                 .GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
-            //builder.RegisterAssemblyTypes(typeof(DeleteAspNetUserCommand)
-            //    .GetTypeInfo().Assembly)
-            //    .AsClosedTypesOf(typeof(IRequestHandler<,>));
-
-            //builder.RegisterAssemblyTypes(typeof(UpdateAspNetUserCommand)
-            //    .GetTypeInfo().Assembly)
-            //    .AsClosedTypesOf(typeof(IRequestHandler<,>));
+            builder.RegisterAssemblyTypes(typeof(LoginUserCommand)
+                .GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
             #endregion
 
-            #region AspNetRole Commands CRUD
+            #region Role Commands CRUD
 
-            builder.RegisterAssemblyTypes(typeof(CreateAspNetRoleCommand)
-                .GetTypeInfo().Assembly)
-                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+            //builder.RegisterAssemblyTypes(typeof(CreateRoleCommand)
+            //    .GetTypeInfo().Assembly)
+            //    .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
             //builder.RegisterAssemblyTypes(typeof(DeleteAspNetRoleCommand)
             //    .GetTypeInfo().Assembly)
@@ -57,23 +52,17 @@ namespace Identity.API.Infrastructure.AutofacModules
 
             // Register the Command's Validators (Validators based on FluentValidation library)
 
-            #region AspNetUser Commands Validator
+            #region User Commands Validator
 
             builder
-            .RegisterAssemblyTypes(typeof(CreateAspNetUserCommandValidator)
+            .RegisterAssemblyTypes(typeof(CreateUserCommandValidator)
             .GetTypeInfo().Assembly)
             .Where(t => t.IsClosedTypeOf(typeof(IValidator<>)))
             .AsImplementedInterfaces();
 
-            //builder
-            //.RegisterAssemblyTypes(typeof(UpdateAspNetUserCommandValidator)
-            //.GetTypeInfo().Assembly)
-            //.Where(t => t.IsClosedTypeOf(typeof(IValidator<>)))
-            //.AsImplementedInterfaces();
-
             #endregion
 
-            #region AspNetRole Commands Validator
+            #region Role Commands Validator
 
             //builder
             //.RegisterAssemblyTypes(typeof(CreateAspNetRoleCommandValidator)

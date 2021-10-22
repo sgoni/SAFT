@@ -126,7 +126,25 @@
   <data name="exception_AspNetUserNotFound" xml:space="preserve">
     <value>User not found.!</value>
   </data>
+  <data name="exception_EmailNotNull" xml:space="preserve">
+    <value>Email should not be empty!</value>
+  </data>
+  <data name="exception_FormatEmailNotValid" xml:space="preserve">
+    <value>Format email not valid.</value>
+  </data>
+  <data name="exception_PasswordNotNull" xml:space="preserve">
+    <value>Password should not be empty!</value>
+  </data>
   <data name="exception_PasswordNotValid" xml:space="preserve">
     <value>Password should contain at least one lower case letter, one upper case letter, should not be less than or greater than 12 characters should contain At least one numeric value and one special case characters.</value>
+  </data>
+  <data name="message_Logout" xml:space="preserve">
+    <value>ou are logged out</value>
+  </data>
+  <data name="message_UserRegistrationFailed" xml:space="preserve">
+    <value>User Registration Failed</value>
+  </data>
+  <data name="message_UserRegistrationSuccessful" xml:space="preserve">
+    <value>User Reigstration Successful</value>
   </data>
 </root>

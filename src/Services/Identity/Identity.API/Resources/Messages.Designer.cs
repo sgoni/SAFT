@@ -88,11 +88,65 @@ namespace Identity.API.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Email should not be empty!.
+        /// </summary>
+        internal static string exception_EmailNotNull {
+            get {
+                return ResourceManager.GetString("exception_EmailNotNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Format email not valid..
+        /// </summary>
+        internal static string exception_FormatEmailNotValid {
+            get {
+                return ResourceManager.GetString("exception_FormatEmailNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Password should not be empty!.
+        /// </summary>
+        internal static string exception_PasswordNotNull {
+            get {
+                return ResourceManager.GetString("exception_PasswordNotNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Password should contain at least one lower case letter, one upper case letter, should not be less than or greater than 12 characters should contain At least one numeric value and one special case characters..
         /// </summary>
         internal static string exception_PasswordNotValid {
             get {
                 return ResourceManager.GetString("exception_PasswordNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ou are logged out.
+        /// </summary>
+        internal static string message_Logout {
+            get {
+                return ResourceManager.GetString("message_Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a User Registration Failed.
+        /// </summary>
+        internal static string message_UserRegistrationFailed {
+            get {
+                return ResourceManager.GetString("message_UserRegistrationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a User Reigstration Successful.
+        /// </summary>
+        internal static string message_UserRegistrationSuccessful {
+            get {
+                return ResourceManager.GetString("message_UserRegistrationSuccessful", resourceCulture);
             }
         }
     }

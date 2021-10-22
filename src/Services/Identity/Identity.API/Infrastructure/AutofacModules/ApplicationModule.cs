@@ -1,6 +1,6 @@
 ﻿using Autofac;
-using Identity.API.Application.Commands.AspnetRole;
-using Identity.API.Application.Commands.AspnetUser;
+using Identity.API.Application.Commands.Role;
+using Identity.API.Application.Commands.User;
 using MediatR;
 using System.Reflection;
 
@@ -23,21 +23,13 @@ namespace Identity.API.Infrastructure.AutofacModules
             //    .As<IAspNetApplicationQueries>()
             //    .InstancePerLifetimeScope();
 
-            //builder.RegisterType<AspNetUserRepository>()
-            //    .As<IAspNetUserRepository>()
-            //    .InstancePerLifetimeScope();
-
-            builder.RegisterAssemblyTypes(typeof(CreateAspNetUserCommand)
+            builder.RegisterAssemblyTypes(typeof(CreatetUserCommand)
                 .GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
-            //builder.RegisterAssemblyTypes(typeof(DeleteAspNetUserCommandHandler)
-            //    .GetTypeInfo().Assembly)
-            //    .AsClosedTypesOf(typeof(IRequestHandler<,>));
-
-            //builder.RegisterAssemblyTypes(typeof(UpdateAspNetUserCommandHandler)
-            //    .GetTypeInfo().Assembly)
-            //    .AsClosedTypesOf(typeof(IRequestHandler<,>));
+            builder.RegisterAssemblyTypes(typeof(LoginUserCommand)
+                .GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
             #endregion
 
@@ -51,7 +43,7 @@ namespace Identity.API.Infrastructure.AutofacModules
             //    .As<IAspNetUserRepository>()
             //    .InstancePerLifetimeScope();
 
-            builder.RegisterAssemblyTypes(typeof(CreateAspNetRoleCommand)
+            builder.RegisterAssemblyTypes(typeof(CreateRoleCommand)
                 .GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
 

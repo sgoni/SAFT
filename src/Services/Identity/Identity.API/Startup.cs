@@ -1,25 +1,22 @@
 using Autofac;
+using Identity.API.Infrastructure.Auth;
 using Identity.API.Infrastructure.AutofacModules;
+using Identity.Domain.AggregatesModel;
 using Identity.Infrastructure;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Web;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
+using System.Text;
 
 namespace Identity.API
 {
@@ -35,8 +32,8 @@ namespace Identity.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //    .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
 
             // Add services to the collection. Don't build or return
             // any IServiceProvider or the ConfigureContainer method
@@ -48,7 +45,7 @@ namespace Identity.API
                 .AddCustomSwagger(Configuration)
                 .AddHealthChecks(Configuration)
                 .AddConfigureIdentity(Configuration)
-                .AddAppConfigureCookie(Configuration)
+                .AddJwtBearerTokenSetting(Configuration)
                 //.AddMediatR(typeof(Startup).Assembly)
                 .AddOptions()
                 .AddControllers();
@@ -119,18 +116,7 @@ namespace Identity.API
             //    options => options.UseInMemoryDatabase(databaseName: "testDB")
             //);
 
-            //MySQL Pomelo NuGet
-            //services.AddDbContextPool<CustomerDBContext>(
-            //    options => options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(connString)));
-
-            //MySQL
-            //services.AddDbContext<CustomerDBContext>(
-            //    options => options.UseMySQL(connString));
-
             //SQlServer
-            services.AddDbContext<IdentityDBContext>(
-                options => options.UseSqlServer(connString));
-
             services.AddDbContext<IdentityDBContext>(options =>
             {
                 options.UseSqlServer(connString,
@@ -140,7 +126,14 @@ namespace Identity.API
                         sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
                     });
             },
-                ServiceLifetime.Scoped); //Showing explicitly that the DbContext is shared across the HTTP request scope (graph of objects started in the HTTP request)
+            ServiceLifetime.Scoped); //Showing explicitly that the DbContext is shared across the HTTP request scope (graph of objects started in the HTTP request)
+
+            //Identity schema
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<IdentityDBContext>();
+
+            //services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+            //                .AddEntityFrameworkStores<IdentityDBContext>();
 
             return services;
         }
@@ -153,6 +146,28 @@ namespace Identity.API
                 {
                     Title = "Identity.API",
                     Version = "v1"
+                });
+
+                var securitySchema = new OpenApiSecurityScheme
+                {
+                    Description = "Using the Authorization header with the Bearer scheme.",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                };
+
+                c.AddSecurityDefinition("Bearer", securitySchema);
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                    {
+                        securitySchema, new[] { "Bearer" }
+                    }
                 });
             });
 
@@ -203,6 +218,34 @@ namespace Identity.API
                 options.LoginPath = "/Identity/Account/Login";
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.SlidingExpiration = true;
+            });
+
+            return services;
+        }
+
+        public static IServiceCollection AddJwtBearerTokenSetting(this IServiceCollection services, IConfiguration configuration)
+        {
+            //configure strongly typed settings objects
+            var jwtSection = configuration.GetSection("JwtBearerTokenSettings");
+            services.Configure<JwtBearerTokenSettings>(jwtSection);
+            var jwtBearerTokenSettings = jwtSection.Get<JwtBearerTokenSettings>();
+            var key = Encoding.ASCII.GetBytes(jwtBearerTokenSettings.SecretKey);
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidIssuer = jwtBearerTokenSettings.Issuer,
+                    ValidAudience = jwtBearerTokenSettings.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                };
             });
 
             return services;
