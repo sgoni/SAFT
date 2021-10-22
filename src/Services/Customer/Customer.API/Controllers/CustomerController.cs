@@ -2,6 +2,7 @@
 using Customer.API.Application.Queries;
 using Customer.API.Application.Queries.Customer;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 namespace Customer.API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class CustomerController : Controller
     {
@@ -28,8 +30,9 @@ namespace Customer.API.Controllers
             _customerQueries = customerQueries ?? throw new ArgumentNullException(nameof(customerQueries));
         }
 
-        [Route("{documentNumber}")]
         [HttpGet]
+        [Route("{documentNumber}")]
+        [Authorize]
         [ProducesResponseType(typeof(CustomerViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ActionResult> GetCustomerByDocumentNumberAsync(string documentNumber)
@@ -48,6 +51,7 @@ namespace Customer.API.Controllers
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [Authorize(Policy = "WriteAccess")]
         public async Task<ActionResult<bool>> CreateCustomerAsync([FromBody] CreateCustomerCommand createCustomerCommand)
         {
             _logger.LogInformation(
@@ -75,6 +79,7 @@ namespace Customer.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [Authorize(Policy = "WriteAccess")]
         public async Task<ActionResult<bool>> UpdateCustomerAsync([FromBody] CreateCustomerCommand updateCustomerCommand)
         {
             _logger.LogInformation(

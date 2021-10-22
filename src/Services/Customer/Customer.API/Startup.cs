@@ -1,15 +1,19 @@
 using Autofac;
 using Customer.API.Infrastructure.AutofacModules;
 using Customer.Infrastructure;
+using Identity.API.Infrastructure.Auth;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Reflection;
+using System.Text;
 
 namespace Customer.API
 {
@@ -34,7 +38,7 @@ namespace Customer.API
                 .AddCustomDbContext(Configuration)
                 .AddCustomSwagger(Configuration)
                 .AddHealthChecks(Configuration)
-                //.AddMediatR(typeof(Startup).Assembly)
+                .AddJwtBearerTokenSetting(Configuration)
                 .AddOptions()
                 .AddControllers();
         }
@@ -119,8 +123,30 @@ namespace Customer.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "Customer.API",
+                    Title = "Identity.API",
                     Version = "v1"
+                });
+
+                var securitySchema = new OpenApiSecurityScheme
+                {
+                    Description = "Using the Authorization header with the Bearer scheme.",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                };
+
+                c.AddSecurityDefinition("Bearer", securitySchema);
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                    {
+                        securitySchema, new[] { "Bearer" }
+                    }
                 });
             });
 
@@ -130,6 +156,34 @@ namespace Customer.API
         public static IServiceCollection AddHealthChecks(this IServiceCollection services, IConfiguration configuration)
         {
             var hcBuilder = services.AddHealthChecks();
+
+            return services;
+        }
+
+        public static IServiceCollection AddJwtBearerTokenSetting(this IServiceCollection services, IConfiguration configuration)
+        {
+            //configure strongly typed settings objects
+            var jwtSection = configuration.GetSection("JwtBearerTokenSettings");
+            services.Configure<JwtBearerTokenSettings>(jwtSection);
+            var jwtBearerTokenSettings = jwtSection.Get<JwtBearerTokenSettings>();
+            var key = Encoding.ASCII.GetBytes(jwtBearerTokenSettings.SecretKey);
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidIssuer = jwtBearerTokenSettings.Issuer,
+                    ValidAudience = jwtBearerTokenSettings.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                };
+            });
 
             return services;
         }

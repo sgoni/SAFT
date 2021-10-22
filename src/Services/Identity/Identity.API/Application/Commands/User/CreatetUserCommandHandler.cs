@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace Identity.API.Application.Commands.User
 {
-    public class CreatetUserCommandHandler : IRequestHandler<CreatetUserCommand, IdentityResult>
+    public class CreatetUserCommandHandler 
+        : IRequestHandler<CreatetUserCommand, IdentityResult>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;

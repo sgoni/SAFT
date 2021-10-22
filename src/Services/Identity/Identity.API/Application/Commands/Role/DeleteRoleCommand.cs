@@ -4,18 +4,17 @@ using System.Runtime.Serialization;
 
 namespace Identity.API.Application.Commands.Role
 {
-    public class CreateRoleCommand
+    public class DeleteRoleCommand
         : IRequest<IdentityResult>
     {
         [DataMember]
-        public string Name { get; set; }
+        public string Id { get; set; }
 
-        public CreateRoleCommand() { }
+        public DeleteRoleCommand() { }
 
-        public CreateRoleCommand(string name) : this()
+        public DeleteRoleCommand(string name) : this()
         {
-            Name = name;
+            Id = Id;
         }
     }
 }
-

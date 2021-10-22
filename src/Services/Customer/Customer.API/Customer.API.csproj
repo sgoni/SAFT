@@ -20,6 +20,7 @@
     <PackageReference Include="FluentValidation" Version="10.3.3" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.11">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -42,7 +43,6 @@
     <Folder Include="Extensions\" />
     <Folder Include="Infrastructure\ActionResults\" />
     <Folder Include="Infrastructure\Middlewares\" />
-    <Folder Include="Infrastructure\Auth\" />
     <Folder Include="Infrastructure\Factories\" />
     <Folder Include="Infrastructure\Filters\" />
     <Folder Include="Infrastructure\IntegrationEventMigrations\" />
