@@ -12,9 +12,9 @@ namespace Identity.API.Application.Commands.Role
 
         public DeleteRoleCommand() { }
 
-        public DeleteRoleCommand(string name) : this()
+        public DeleteRoleCommand(string id) : this()
         {
-            Id = Id;
+            Id = id;
         }
     }
 }

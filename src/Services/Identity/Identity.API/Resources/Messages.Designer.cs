@@ -88,6 +88,15 @@ namespace Identity.API.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Bad Request!!!.
+        /// </summary>
+        internal static string exception_BadRequest {
+            get {
+                return ResourceManager.GetString("exception_BadRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Email should not be empty!.
         /// </summary>
         internal static string exception_EmailNotNull {
@@ -124,7 +133,43 @@ namespace Identity.API.Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a ou are logged out.
+        ///   Busca una cadena traducida similar a Role Delete Failed..
+        /// </summary>
+        internal static string exception_RoleDeleteFailed {
+            get {
+                return ResourceManager.GetString("exception_RoleDeleteFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Role not exists!..
+        /// </summary>
+        internal static string exception_RoleNotExists {
+            get {
+                return ResourceManager.GetString("exception_RoleNotExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Role Registration Failed..
+        /// </summary>
+        internal static string exception_RoleRegistrationFailed {
+            get {
+                return ResourceManager.GetString("exception_RoleRegistrationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a User Registration Failed..
+        /// </summary>
+        internal static string exception_UserRegistrationFailed {
+            get {
+                return ResourceManager.GetString("exception_UserRegistrationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You are logged out!..
         /// </summary>
         internal static string message_Logout {
             get {
@@ -133,20 +178,56 @@ namespace Identity.API.Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a User Registration Failed.
+        ///   Busca una cadena traducida similar a Role Deleted!..
         /// </summary>
-        internal static string message_UserRegistrationFailed {
+        internal static string message_RoleDeleteSuccessful {
             get {
-                return ResourceManager.GetString("message_UserRegistrationFailed", resourceCulture);
+                return ResourceManager.GetString("message_RoleDeleteSuccessful", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a User Reigstration Successful.
+        ///   Busca una cadena traducida similar a Role Registration Successful..
+        /// </summary>
+        internal static string message_RoleRegistrationSuccessful {
+            get {
+                return ResourceManager.GetString("message_RoleRegistrationSuccessful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a User Asigned To Role Successful..
+        /// </summary>
+        internal static string message_UserAsignedToRoleSuccessful {
+            get {
+                return ResourceManager.GetString("message_UserAsignedToRoleSuccessful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a User Deleted!..
+        /// </summary>
+        internal static string message_UserDeleteSuccessful {
+            get {
+                return ResourceManager.GetString("message_UserDeleteSuccessful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a User Registration Successful..
         /// </summary>
         internal static string message_UserRegistrationSuccessful {
             get {
                 return ResourceManager.GetString("message_UserRegistrationSuccessful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Remove User From Role Successful..
+        /// </summary>
+        internal static string message_UserRemoveFromRoleSuccessful {
+            get {
+                return ResourceManager.GetString("message_UserRemoveFromRoleSuccessful", resourceCulture);
             }
         }
     }

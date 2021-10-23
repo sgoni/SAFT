@@ -28,7 +28,7 @@ namespace Customer.API.Controllers
         }
 
         [HttpGet]
-        [Route("GetBankListsAsync")]
+        [Route("GetBankListsc")]
         [ProducesResponseType(typeof(BankingViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ActionResult> GetBankListsAsync()
@@ -45,7 +45,7 @@ namespace Customer.API.Controllers
         }
 
         [HttpGet]
-        [Route("GetBankByIdAsync/{bankId:int}")]
+        [Route("GetBankById/{bankId:int}")]
         [ProducesResponseType(typeof(BankingViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ActionResult> GetBankByIdAsync(int bankId)

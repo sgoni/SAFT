@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using Identity.API.Application.Commands.Queries.GetRoleList;
+using Identity.API.Application.Commands.Queries.GetUsersInRole;
 using Identity.API.Application.Commands.Role;
 using Identity.API.Application.Commands.User;
 using MediatR;
@@ -17,43 +19,48 @@ namespace Identity.API.Infrastructure.AutofacModules
 
         protected override void Load(ContainerBuilder builder)
         {
-            #region AspNetUser
+            #region User
 
-            //builder.Register(c => new AspNetApplicationQueries(QueriesConnectionString))
-            //    .As<IAspNetApplicationQueries>()
-            //    .InstancePerLifetimeScope();
-
-            builder.RegisterAssemblyTypes(typeof(CreatetUserCommand)
+            builder.RegisterAssemblyTypes(typeof(AddUserToRoleCommandHandler)
                 .GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
-            builder.RegisterAssemblyTypes(typeof(LoginUserCommand)
+            builder.RegisterAssemblyTypes(typeof(CreatetUserCommandHandler)
+                .GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(DeleteUserCommandHandler)
+                .GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(GetRoleListHandler)
+                .GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(GetUsersInRoleListHandler)
+                .GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(LoginUserCommandHandler)
+                .GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(RemoveUserFromRoleCommandHandler)
                 .GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
             #endregion
 
-            #region AspNetRole
+            #region Role
 
-            //builder.Register(c => new AspNetApplicationQueries(QueriesConnectionString))
-            //    .As<IAspNetApplicationQueries>()
-            //    .InstancePerLifetimeScope();
-
-            //builder.RegisterType<AspNetUserRepository>()
-            //    .As<IAspNetUserRepository>()
-            //    .InstancePerLifetimeScope();
-
-            builder.RegisterAssemblyTypes(typeof(CreateRoleCommand)
+            builder.RegisterAssemblyTypes(typeof(CreateRoleCommandHandler)
                 .GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
-            //builder.RegisterAssemblyTypes(typeof(DeleteAspNetRoleCommandHandler)
-            //    .GetTypeInfo().Assembly)
-            //    .AsClosedTypesOf(typeof(IRequestHandler<,>));
+            builder.RegisterAssemblyTypes(typeof(DeleteRoleCommandHandler)
+                .GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
-            //builder.RegisterAssemblyTypes(typeof(UpdateAspNetRoleCommandHandler)
-            //    .GetTypeInfo().Assembly)
-            //    .AsClosedTypesOf(typeof(IRequestHandler<,>));
             #endregion
         }
     }

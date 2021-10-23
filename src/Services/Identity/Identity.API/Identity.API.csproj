@@ -15,7 +15,6 @@
     <Compile Remove="Application\Commands\User\DeleteAspNetUserCommandHandler.cs" />
     <Compile Remove="Application\Commands\User\UpdateAspNetUserCommand.cs" />
     <Compile Remove="Application\Commands\User\UpdateAspNetUserCommandHandler.cs" />
-    <Compile Remove="Application\Validations\CreateAspNetRoleCommandValidator.cs" />
     <Compile Remove="Application\Validations\UpdateAspNetRoleCommandValidator.cs" />
     <Compile Remove="Application\Validations\UpdateAspNetUserCommandValidator.cs" />
   </ItemGroup>
@@ -45,7 +44,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Commands\Queries\" />
     <Folder Include="Data\" />
     <Folder Include="Logs\" />
   </ItemGroup>
@@ -77,5 +75,7 @@
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

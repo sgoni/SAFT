@@ -29,8 +29,6 @@ namespace Identity.API.Controllers
     [Route("api/[controller]")]
     public class AccountController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IMediator _mediator;
         private readonly ILogger<AccountController> _logger;
 
@@ -124,12 +122,13 @@ namespace Identity.API.Controllers
             if (!result.Succeeded)
             {
                 var dictionary = new ModelStateDictionary();
+
                 foreach (IdentityError error in result.Errors)
                 {
                     dictionary.AddModelError(error.Code, error.Description);
                 }
 
-                return new BadRequestObjectResult(new { Message = Messages.message_UserRegistrationFailed, Errors = dictionary });
+                return new BadRequestObjectResult(new { Message = Messages.exception_UserRegistrationFailed, Errors = dictionary });
             }
 
             return Ok(new { Message = Messages.message_UserRegistrationSuccessful });
@@ -160,13 +159,12 @@ namespace Identity.API.Controllers
 
         [HttpPost]
         [Route("Logout")]
-        public async Task<IActionResult> Logout()
+        public IActionResult Logout()
         {
             // Well, What do you want to do here ?
             // Wait for token to get expired OR 
             // Maintain token cache and invalidate the tokens after logout method is called
             return Ok(new { Token = "", Message = "Logged Out" });
         }
-
     }
 }

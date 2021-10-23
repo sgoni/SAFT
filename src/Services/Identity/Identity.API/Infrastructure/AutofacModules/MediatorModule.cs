@@ -1,6 +1,9 @@
 ﻿using Autofac;
 using FluentValidation;
 using Identity.API.Application.Behaviors;
+using Identity.API.Application.Commands.Queries.GetRoleList;
+using Identity.API.Application.Commands.Queries.GetUsersInRole;
+using Identity.API.Application.Commands.Role;
 using Identity.API.Application.Commands.User;
 using Identity.API.Application.Validations;
 using MediatR;
@@ -19,7 +22,23 @@ namespace Identity.API.Infrastructure.AutofacModules
 
             #region User Commands CRUD
 
+            builder.RegisterAssemblyTypes(typeof(AddUserToRoleCommand)
+                .GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
             builder.RegisterAssemblyTypes(typeof(CreatetUserCommand)
+                .GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(DeleteUserCommand)
+                .GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(GetRoleListQuerie)
+                .GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(GetUsersInRoleListQuerie)
                 .GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
@@ -27,21 +46,21 @@ namespace Identity.API.Infrastructure.AutofacModules
                 .GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
+            builder.RegisterAssemblyTypes(typeof(RemoveUserFromRoleCommand)
+                .GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
             #endregion
 
             #region Role Commands CRUD
 
-            //builder.RegisterAssemblyTypes(typeof(CreateRoleCommand)
-            //    .GetTypeInfo().Assembly)
-            //    .AsClosedTypesOf(typeof(IRequestHandler<,>));
+            builder.RegisterAssemblyTypes(typeof(CreateRoleCommand)
+                .GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
-            //builder.RegisterAssemblyTypes(typeof(DeleteAspNetRoleCommand)
-            //    .GetTypeInfo().Assembly)
-            //    .AsClosedTypesOf(typeof(IRequestHandler<,>));
-
-            //builder.RegisterAssemblyTypes(typeof(UpdateAspNetRoleCommand)
-            //    .GetTypeInfo().Assembly)
-            //    .AsClosedTypesOf(typeof(IRequestHandler<,>));
+            builder.RegisterAssemblyTypes(typeof(DeleteRoleCommand)
+                .GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
             #endregion
 
@@ -64,17 +83,11 @@ namespace Identity.API.Infrastructure.AutofacModules
 
             #region Role Commands Validator
 
-            //builder
-            //.RegisterAssemblyTypes(typeof(CreateAspNetRoleCommandValidator)
-            //.GetTypeInfo().Assembly)
-            //.Where(t => t.IsClosedTypeOf(typeof(IValidator<>)))
-            //.AsImplementedInterfaces();
-
-            //builder
-            //.RegisterAssemblyTypes(typeof(UpdateAspNetUserCommandValidator)
-            //.GetTypeInfo().Assembly)
-            //.Where(t => t.IsClosedTypeOf(typeof(IValidator<>)))
-            //.AsImplementedInterfaces();
+            builder
+            .RegisterAssemblyTypes(typeof(CreateRoleCommandValidator)
+            .GetTypeInfo().Assembly)
+            .Where(t => t.IsClosedTypeOf(typeof(IValidator<>)))
+            .AsImplementedInterfaces();
 
             #endregion
 

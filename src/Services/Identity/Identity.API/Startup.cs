@@ -67,19 +67,6 @@ namespace Identity.API
             builder.RegisterModule(new ApplicationModule(connString));
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        //public void ConfigureServices(IServiceCollection services)
-        //{
-        //    services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        //        .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
-
-        //    services.AddControllers();
-        //    services.AddSwaggerGen(c =>
-        //    {
-        //        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Identity.API", Version = "v1" });
-        //    });
-        //}
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -129,11 +116,11 @@ namespace Identity.API
             ServiceLifetime.Scoped); //Showing explicitly that the DbContext is shared across the HTTP request scope (graph of objects started in the HTTP request)
 
             //Identity schema
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<IdentityDBContext>();
+            //services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //    .AddEntityFrameworkStores<IdentityDBContext>();
 
-            //services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-            //                .AddEntityFrameworkStores<IdentityDBContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                            .AddEntityFrameworkStores<IdentityDBContext>();
 
             return services;
         }

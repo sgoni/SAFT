@@ -1,12 +1,12 @@
 ﻿using FluentValidation;
-using Identity.API.Application.Commands.AspnetRole;
+using Identity.API.Application.Commands.Role;
 using Microsoft.Extensions.Logging;
 
 namespace Identity.API.Application.Validations
 {
-    public class CreateAspNetRoleCommandValidator : AbstractValidator<CreateAspNetRoleCommand>
+    public class CreateRoleCommandValidator : AbstractValidator<CreateRoleCommand>
     {
-        public CreateAspNetRoleCommandValidator(ILogger<CreateAspNetRoleCommandValidator> logger)
+        public CreateRoleCommandValidator(ILogger<CreateRoleCommandValidator> logger)
         {
             RuleFor(command => command.Name).NotEmpty().Length(5, 55);
 

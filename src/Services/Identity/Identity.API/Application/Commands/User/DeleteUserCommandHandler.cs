@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Identity.Domain.AggregatesModel;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using System;
@@ -10,12 +11,12 @@ namespace Identity.API.Application.Commands.User
     public class DeleteUserCommandHandler
         : IRequestHandler<DeleteUserCommand, IdentityResult>
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<DeleteUserCommandHandler> _logger;
         private readonly IMediator _mediator;
 
         public DeleteUserCommandHandler(
-            UserManager<IdentityUser> userManager,
+            UserManager<ApplicationUser> userManager,
             IMediator mediator,
             ILogger<DeleteUserCommandHandler> logger)
         {
